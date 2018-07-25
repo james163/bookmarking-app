@@ -1,8 +1,61 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileActions";
 class Header extends Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+
+    this.props.clearCurrentProfile();
+    this.props.logoutUser();
+  }
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const authLinks = (
+      <div style={{ display: "flex" }}>
+        <li>
+          <Link
+            to="/dashboard"
+            className="nav-link page-scroll"
+            style={{ color: "white" }}
+          >
+            Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="nav-link page-scroll"
+            style={{ color: "white" }}
+            to=""
+            onClick={this.onLogoutClick.bind(this)}
+          >
+            <img
+              className="rounded-circle"
+              src={user.avatar}
+              alt={user.name}
+              style={{ width: "25px", marginRight: "5px" }}
+              title="You must have a Gravatar connected to your email to display an image"
+            />{" "}
+            Logout
+          </Link>
+        </li>
+      </div>
+    );
+    const guestLinks = (
+      <li>
+        <Link
+          to="/login"
+          className="nav-link page-scroll"
+          style={{ color: "white" }}
+        >
+          Login
+        </Link>
+      </li>
+    );
+
     return (
       <header className="section-header">
         <nav className="navbar navbar-landing navbar-expand-lg navbar-dark bg-dark">
@@ -56,18 +109,7 @@ class Header extends Component {
                     </Link>
                   </div>
                 </li>
-                <li className="nav-item">
-                  <div className="icontext">
-                    <div className="icon-wrap">
-                      <i className="icon-sm round border fa fa-user" />
-                    </div>
-                    <div className="text-wrap">
-                      <div>
-                        <Link to="/login"> Sign in | Join</Link>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                {isAuthenticated ? authLinks : guestLinks}
               </ul>
             </div>
           </div>
@@ -78,4 +120,16 @@ class Header extends Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { clearCurrentProfile, logoutUser }
+)(Header);

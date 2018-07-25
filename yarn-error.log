@@ -1,0 +1,59 @@
+Arguments: 
+  /usr/bin/node /usr/share/yarn/bin/yarn.js install
+
+PATH: 
+  /home/alpha/bin:/home/alpha/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.7.0
+
+Node version: 
+  10.7.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/bcryptjs: ETIMEDOUT
+      at Timeout._onTimeout (/usr/share/yarn/lib/cli.js:135339:19)
+      at ontimeout (timers.js:427:11)
+      at tryOnTimeout (timers.js:289:5)
+      at listOnTimeout (timers.js:252:5)
+      at Timer.processTimers (timers.js:212:10)
+
+npm manifest: 
+  {
+    "name": "bookmarking",
+    "version": "1.0.0",
+    "description": "read later application",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js",
+      "server": "nodemon server.js",
+      "client-install": "npm install --prefix client",
+      "client": "npm start --prefix client",
+      "dev": "concurrently \"npm run server\" \"npm run client\""
+    },
+    "private": true,
+    "dependencies": {
+      "bcryptjs": "^2.4.3",
+      "body-parser": "^1.18.2",
+      "concurrently": "^3.5.1",
+      "express": "^4.16.3",
+      "gravatar": "^1.6.0",
+      "jsonwebtoken": "^8.2.0",
+      "mongoose": "^5.0.12",
+      "passport": "^0.4.0",
+      "passport-jwt": "^4.0.0",
+      "validator": "^10.2.0"
+    },
+    "devDependencies": {
+      "nodemon": "^1.17.3"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
